@@ -10,7 +10,9 @@
     --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
     --shadow-md: 0 8px 20px rgba(0, 0, 0, 0.1);
     --shadow-lg: 0 25px 40px rgba(0, 0, 0, 0.2);
-    --transition: all 0.3s ease;
+    --transition-fast: 0.2s ease;
+    --transition-normal: 0.3s ease;
+    --transition-slow: 0.5s ease;
 }
 
 * {
@@ -40,7 +42,12 @@ body {
     border-radius: 68px 68px 52px 52px;
     box-shadow: var(--shadow-lg), inset 0 1px 4px rgba(255, 255, 200, 0.5);
     overflow: hidden;
-    transition: var(--transition);
+    transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+.memorial-container:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 30px 50px rgba(0, 0, 0, 0.3);
 }
 
 .paper-bg {
@@ -48,6 +55,82 @@ body {
     backdrop-filter: blur(2px);
     padding: 2rem 1.8rem 2.2rem;
 }
+
+/* ================= 入场动画 ================= */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+@keyframes gentlePulse {
+    0%, 100% { opacity: 0.7; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.05); }
+}
+
+@keyframes borderGlow {
+    0%, 100% { border-color: #e2c7a5; box-shadow: 0 0 0 0 rgba(197, 148, 100, 0.2); }
+    50% { border-color: #c59464; box-shadow: 0 0 0 4px rgba(197, 148, 100, 0.3); }
+}
+
+.fade-in { animation: fadeIn 0.8s ease-out; }
+.fade-in-up { animation: fadeInUp 0.6s ease-out forwards; opacity: 0; }
+.fade-in-down { animation: fadeInDown 0.6s ease-out forwards; }
+.slide-down { animation: slideDown 0.5s ease-out forwards; }
+.scale-in { animation: scaleIn 0.5s ease-out forwards; }
+
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.2s; }
+.delay-3 { animation-delay: 0.3s; }
+.delay-4 { animation-delay: 0.4s; }
 
 /* ================= 头部 ================= */
 .tomb-header {
@@ -63,6 +146,11 @@ body {
     color: var(--primary-dark);
     font-weight: 600;
     text-shadow: 2px 2px 0 rgba(217, 197, 167, 0.5);
+    transition: text-shadow var(--transition-normal);
+}
+
+.tomb-header h1:hover {
+    text-shadow: 3px 3px 4px rgba(184, 124, 79, 0.3);
 }
 
 @media (max-width: 480px) {
@@ -78,6 +166,11 @@ body {
     border-top: 1px dashed #cbad85;
     display: inline-block;
     padding-top: 8px;
+    transition: color var(--transition-fast);
+}
+
+.subtitle:hover {
+    color: #8b5a3a;
 }
 
 /* ================= 肖像区 ================= */
@@ -100,6 +193,12 @@ body {
     background: linear-gradient(135deg, #e2c7a5, #c6aa7b);
     border-radius: 32px;
     z-index: 0;
+    opacity: 0;
+    transition: opacity var(--transition-normal);
+}
+
+.portrait-wrapper:hover::before {
+    opacity: 1;
 }
 
 .teacher-portrait {
@@ -111,12 +210,13 @@ body {
     border: 3px solid #fef3e0;
     background-color: #fef3e0;
     box-shadow: var(--shadow-md);
-    transition: transform 0.3s ease;
+    transition: transform 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1), box-shadow var(--transition-normal);
     z-index: 1;
 }
 
 .teacher-portrait:hover {
-    transform: scale(1.02);
+    transform: scale(1.03) rotate(1deg);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
 }
 
 .teacher-name {
@@ -130,6 +230,13 @@ body {
     border: 1px solid #e2c7a5;
     box-shadow: var(--shadow-sm);
     margin-top: 8px;
+    transition: all var(--transition-normal);
+}
+
+.teacher-name:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    background: linear-gradient(135deg, #fff5e8, #fdefdf);
 }
 
 .lifespan {
@@ -140,6 +247,12 @@ body {
     padding: 5px 16px;
     border-radius: 30px;
     backdrop-filter: blur(2px);
+    transition: all var(--transition-fast);
+}
+
+.lifespan:hover {
+    background: rgba(230, 210, 180, 0.8);
+    transform: translateY(-1px);
 }
 
 /* ================= 悼词区 ================= */
@@ -150,6 +263,12 @@ body {
     margin: 28px 0;
     box-shadow: inset 0 1px 3px #fffef8, var(--shadow-sm);
     border: 1px solid var(--border-light);
+    transition: all var(--transition-normal);
+}
+
+.eulogy:hover {
+    box-shadow: inset 0 1px 3px #fffef8, var(--shadow-md);
+    transform: translateY(-2px);
 }
 
 .eulogy p {
@@ -158,6 +277,11 @@ body {
     color: #2f241b;
     text-indent: 2em;
     margin: 0.7rem 0;
+    transition: color var(--transition-fast);
+}
+
+.eulogy p:hover {
+    color: #3e2a21;
 }
 
 .eulogy .quote {
@@ -169,6 +293,13 @@ body {
     margin: 14px 0;
     background: #fef5ea;
     border-radius: 0 30px 30px 0;
+    transition: all var(--transition-normal);
+}
+
+.eulogy .quote:hover {
+    border-left-width: 6px;
+    background: #fff8ef;
+    transform: translateX(4px);
 }
 
 /* ================= 追思区 ================= */
@@ -179,6 +310,11 @@ body {
     margin-bottom: 30px;
     text-align: center;
     box-shadow: inset 0 1px 4px rgba(255, 255, 210, 0.6), var(--shadow-md);
+    transition: all var(--transition-normal);
+}
+
+.offering-area:hover {
+    box-shadow: inset 0 1px 4px rgba(255, 255, 210, 0.6), var(--shadow-lg);
 }
 
 .offering-title {
@@ -194,6 +330,16 @@ body {
 
 .title-icon {
     font-size: 1.3rem;
+    display: inline-block;
+    transition: transform var(--transition-fast);
+}
+
+.title-icon:hover {
+    transform: scale(1.2);
+}
+
+.pulse {
+    animation: gentlePulse 2s ease-in-out infinite;
 }
 
 .sender-section {
@@ -203,6 +349,12 @@ body {
     margin: 12px 0 18px;
     border: 1px solid #e2caad;
     box-shadow: inset 0 1px 2px #fffcf0, var(--shadow-sm);
+    transition: all var(--transition-normal);
+}
+
+.sender-section:hover {
+    border-color: #cbaa7a;
+    box-shadow: inset 0 1px 2px #fffcf0, var(--shadow-md);
 }
 
 .sender-row, .gift-item-row {
@@ -231,12 +383,13 @@ body {
     font-family: inherit;
     font-size: 0.9rem;
     outline: none;
-    transition: var(--transition);
+    transition: all var(--transition-normal);
 }
 
 .sender-input:focus, .gift-input:focus, .guest-name-input:focus, .guest-msg-input:focus {
     border-color: var(--accent-warm);
     box-shadow: 0 0 0 3px rgba(197, 148, 100, 0.2);
+    transform: scale(1.01);
 }
 
 .offering-buttons {
@@ -257,22 +410,48 @@ body {
     font-weight: 500;
     color: #5b3a28;
     cursor: pointer;
-    transition: var(--transition);
+    transition: all var(--transition-normal);
     display: inline-flex;
     align-items: center;
     gap: 8px;
     box-shadow: var(--shadow-sm);
     border-bottom: 2px solid #cfa97c;
+    position: relative;
+    overflow: hidden;
+}
+
+.ritual-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transition: left 0.5s ease;
+}
+
+.ritual-btn:hover::before {
+    left: 100%;
 }
 
 .ritual-btn:hover {
-    transform: translateY(-2px);
+    transform: translateY(-3px);
     background: linear-gradient(135deg, #fff8ef, #ffefdf);
-    box-shadow: 0 6px 14px rgba(100, 60, 20, 0.15);
+    box-shadow: 0 8px 20px rgba(100, 60, 20, 0.2);
 }
 
 .ritual-btn:active {
     transform: translateY(1px);
+}
+
+.btn-icon {
+    display: inline-block;
+    transition: transform var(--transition-fast);
+}
+
+.ritual-btn:hover .btn-icon {
+    transform: scale(1.2) rotate(5deg);
 }
 
 .send-gift-btn {
@@ -283,18 +462,40 @@ body {
     color: white;
     font-weight: 600;
     cursor: pointer;
-    transition: var(--transition);
+    transition: all var(--transition-normal);
     display: inline-flex;
     align-items: center;
     gap: 8px;
     font-family: inherit;
     font-size: 0.9rem;
     box-shadow: var(--shadow-sm);
+    position: relative;
+    overflow: hidden;
+}
+
+.send-gift-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.5s ease;
+}
+
+.send-gift-btn:hover::before {
+    left: 100%;
 }
 
 .send-gift-btn:hover {
     background: linear-gradient(135deg, #9e7652, #8a6342);
-    transform: scale(0.98);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+.send-gift-btn:active {
+    transform: translateY(0);
 }
 
 /* ================= 蜡烛区 ================= */
@@ -314,6 +515,24 @@ body {
     position: relative;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     cursor: default;
+    transition: all var(--transition-fast);
+    animation: candleFadeIn 0.4s ease-out;
+}
+
+@keyframes candleFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.candle:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
 .flame {
@@ -346,6 +565,7 @@ body {
     text-align: left;
     border: 1px solid #eddbbc;
     box-shadow: inset 0 0 0 2px #fff7e8, var(--shadow-sm);
+    transition: all var(--transition-normal);
 }
 
 .unified-log p {
@@ -354,6 +574,24 @@ body {
     padding-left: 14px;
     color: #593e2c;
     line-height: 1.5;
+    animation: slideInRight 0.3s ease-out;
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.unified-log p:hover {
+    border-left-width: 5px;
+    background: #fff5ea;
+    transition: all var(--transition-fast);
 }
 
 .log-time {
@@ -370,6 +608,11 @@ body {
     padding: 22px;
     margin: 25px 0 20px;
     box-shadow: var(--shadow-sm);
+    transition: all var(--transition-normal);
+}
+
+.message-section:hover {
+    box-shadow: var(--shadow-md);
 }
 
 .message-title {
@@ -379,6 +622,11 @@ body {
     border-left: 5px solid var(--accent-warm);
     padding-left: 18px;
     margin-bottom: 20px;
+    transition: border-left-width var(--transition-fast);
+}
+
+.message-title:hover {
+    border-left-width: 8px;
 }
 
 .input-group {
@@ -397,7 +645,14 @@ body {
     font-size: 0.9rem;
     resize: vertical;
     outline: none;
-    transition: var(--transition);
+    transition: all var(--transition-normal);
+}
+
+.guest-name-input:focus, .guest-msg-input:focus {
+    border-color: var(--accent-warm);
+    box-shadow: 0 0 0 3px rgba(197, 148, 100, 0.2);
+    transform: scale(1.01);
+    background: white;
 }
 
 .guest-msg-input {
@@ -412,7 +667,7 @@ body {
     color: white;
     font-weight: 600;
     cursor: pointer;
-    transition: var(--transition);
+    transition: all var(--transition-normal);
     width: fit-content;
     align-self: flex-end;
     display: inline-flex;
@@ -420,11 +675,33 @@ body {
     gap: 8px;
     font-family: inherit;
     font-size: 0.95rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.send-msg::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.5s ease;
+}
+
+.send-msg:hover::before {
+    left: 100%;
 }
 
 .send-msg:hover {
     background: linear-gradient(135deg, #9e7652, #8a6342);
-    transform: scale(0.98);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.send-msg:active {
+    transform: translateY(0);
 }
 
 .message-list {
@@ -441,12 +718,25 @@ body {
     padding: 14px 18px;
     border-radius: 32px;
     border: 1px solid #f0ddc6;
-    transition: var(--transition);
+    transition: all var(--transition-normal);
+    animation: messageFadeIn 0.4s ease-out;
+}
+
+@keyframes messageFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .single-message:hover {
     background: #fff9f0;
-    transform: translateX(4px);
+    transform: translateX(6px);
+    box-shadow: var(--shadow-sm);
 }
 
 .msg-name {
@@ -500,7 +790,8 @@ body {
     background: #b28a62;
     border-radius: 50%;
     display: inline-block;
-    animation: pulse 1.2s ease-in-out infinite;
+    position: relative;
+    animation: loadingPulse 1.2s ease-in-out infinite;
 }
 
 .loading-dot::before,
@@ -511,13 +802,13 @@ body {
     background: #b28a62;
     border-radius: 50%;
     position: absolute;
-    animation: pulse 1.2s ease-in-out infinite;
+    animation: loadingPulse 1.2s ease-in-out infinite;
 }
 
 .loading-dot::before { left: -12px; animation-delay: 0s; }
 .loading-dot::after { left: 12px; animation-delay: 0.4s; }
 
-@keyframes pulse {
+@keyframes loadingPulse {
     0%, 60%, 100% { opacity: 0.4; transform: scale(0.8); }
     30% { opacity: 1; transform: scale(1); }
 }
@@ -537,6 +828,11 @@ footer {
     padding-top: 20px;
     margin-top: 16px;
     border-top: 1px solid #dfcaaf;
+    transition: all var(--transition-normal);
+}
+
+footer:hover {
+    color: #7c5a42;
 }
 
 .footer-note {
@@ -558,8 +854,19 @@ footer {
 ::-webkit-scrollbar-thumb {
     background: #c6aa7b;
     border-radius: 10px;
+    transition: background var(--transition-fast);
 }
 
 ::-webkit-scrollbar-thumb:hover {
     background: #b08b5a;
+}
+
+/* ================= 新记录高亮动画 ================= */
+@keyframes highlightFlash {
+    0% { background: #fef0db; border-left-color: #d4a373; }
+    100% { background: #fef5ea; border-left-color: #cbaa7a; }
+}
+
+.new-record {
+    animation: highlightFlash 0.6s ease-out;
 }

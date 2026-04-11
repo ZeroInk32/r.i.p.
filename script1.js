@@ -179,9 +179,9 @@ function updateCandleVisuals() {
     if (activeCandles >= 6) {
         const tip = document.createElement('div');
         tip.innerText = '烛光满堂，思念深厚。';
-        tip.style.cssText = 'font-size:0.7rem;color:#b87c4f;padding:4px;';
+        tip.style.cssText = 'font-size:0.7rem;color:#b87c4f;padding:4px;animation:fadeIn 0.3s ease;';
         candleContainer.appendChild(tip);
-        setTimeout(() => tip.remove(), 1200);
+        setTimeout(() => tip.remove(), 1500);
         return;
     }
     activeCandles++;
@@ -213,13 +213,13 @@ function initDefaultCandles() {
 }
 
 function showToast(message, emoji = '') {
-    const msg = document.createElement('div');
-    msg.innerText = `${emoji} ${message}`;
-    msg.style.cssText = `
+    const toast = document.createElement('div');
+    toast.innerText = `${emoji} ${message}`;
+    toast.style.cssText = `
         position: fixed;
         bottom: 24px;
         left: 50%;
-        transform: translateX(-50%);
+        transform: translateX(-50%) translateY(20px);
         background: #2f241be6;
         backdrop-filter: blur(8px);
         color: #fef3e0;
@@ -231,9 +231,20 @@ function showToast(message, emoji = '') {
         letter-spacing: 1px;
         box-shadow: 0 4px 20px rgba(0,0,0,0.2);
         white-space: nowrap;
+        opacity: 0;
+        transition: all 0.3s ease;
     `;
-    document.body.appendChild(msg);
-    setTimeout(() => msg.remove(), 2200);
+    document.body.appendChild(toast);
+    // 触发动画
+    setTimeout(() => {
+        toast.style.opacity = '1';
+        toast.style.transform = 'translateX(-50%) translateY(0)';
+    }, 10);
+    setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateX(-50%) translateY(20px)';
+        setTimeout(() => toast.remove(), 300);
+    }, 2500);
 }
 
 // ================= 事件绑定与初始化 =================
@@ -265,9 +276,15 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('flowerBtn').addEventListener('click', async () => {
         let sender = senderInput.value.trim() || '敬仰者';
         if (sender === '') sender = '敬仰者';
+        
+        // 按钮点击动画
+        const btn = document.getElementById('flowerBtn');
+        btn.style.transform = 'scale(0.95)';
+        setTimeout(() => { btn.style.transform = ''; }, 150);
+        
         const success = await addGiftRecord(sender, 'flower');
         if (success) {
-            createFloatingPetals(18);
+            createFloatingPetals(22);
             showToast(`${sender} 献上一束鲜花`, '🌸');
         }
     });
@@ -276,9 +293,14 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('candleBtn').addEventListener('click', async () => {
         let sender = senderInput.value.trim() || '敬仰者';
         if (sender === '') sender = '敬仰者';
+        
+        const btn = document.getElementById('candleBtn');
+        btn.style.transform = 'scale(0.95)';
+        setTimeout(() => { btn.style.transform = ''; }, 150);
+        
         const success = await addGiftRecord(sender, 'candle');
         if (success) {
-            createFloatingSparkles(16);
+            createFloatingSparkles(18);
             updateCandleVisuals();
             showToast(`${sender} 点亮追思烛光`, '🕯️');
         }
@@ -290,10 +312,16 @@ document.addEventListener('DOMContentLoaded', () => {
         if (sender === '') sender = '敬仰者';
         let giftVal = giftItemInput.value.trim() || '心意';
         if (giftVal === '') giftVal = '心意';
+        
+        const btn = document.getElementById('sendGiftBtn');
+        btn.style.transform = 'scale(0.95)';
+        setTimeout(() => { btn.style.transform = ''; }, 150);
+        
         const success = await addGiftRecord(sender, 'gift', giftVal);
         if (success) {
-            createFloatingPetals(10);
+            createFloatingPetals(12);
             showToast(`${sender} 敬赠「${giftVal}」`, '🎁');
+            // 礼物名称留空但不强制清空，方便连续赠送不同礼物，但可保留上次输入
         }
     });
 
@@ -302,13 +330,22 @@ document.addEventListener('DOMContentLoaded', () => {
         const name = guestNameInput.value.trim() || '临川学子';
         const content = document.getElementById('guestMsg').value.trim();
         if (!content) {
-            alert('请写下寄语内容');
+            const toast = document.createElement('div');
+            toast.innerText = '📝 请写下寄语内容';
+            toast.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#8b5a2ee6;color:#fef3e0;padding:8px 20px;border-radius:48px;z-index:10000;font-size:0.8rem;';
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 2000);
             return;
         }
+        
+        const btn = document.getElementById('sendMsgBtn');
+        btn.style.transform = 'scale(0.95)';
+        setTimeout(() => { btn.style.transform = ''; }, 150);
+        
         const success = await addComment(name, content);
         if (success) {
             document.getElementById('guestMsg').value = '';
-            createFloatingPetals(8);
+            createFloatingPetals(10);
             showToast(`${name} 留下思念寄语`, '📖');
         }
     });
