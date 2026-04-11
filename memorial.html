@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>刘银老师 · 云端追思园</title>
+    <title>云端追思</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            user-select: none; /* 避免拖动文字，更庄重 */
+            user-select: none;
         }
 
         body {
@@ -22,34 +22,29 @@
             padding: 20px;
         }
 
-        /* 主容器：仿古墓园意境 */
         .memorial-container {
             max-width: 800px;
             width: 100%;
             background: #ece4d7;
             background-image: radial-gradient(circle at 10% 20%, rgba(210, 180, 140, 0.15) 2%, transparent 2.5%),
-                              radial-gradient(circle at 85% 70%, rgba(160, 120, 80, 0.1) 1.8%, transparent 2%);
+                radial-gradient(circle at 85% 70%, rgba(160, 120, 80, 0.1) 1.8%, transparent 2%);
             background-size: 48px 48px, 60px 60px;
             border-radius: 64px 64px 48px 48px;
             box-shadow: 0 25px 40px rgba(0, 0, 0, 0.4), inset 0 1px 4px rgba(255, 255, 200, 0.6);
             overflow: hidden;
-            transition: all 0.3s ease;
         }
 
-        /* 宣纸纹理 */
         .paper-bg {
             background: rgba(250, 245, 235, 0.75);
             backdrop-filter: blur(1px);
             padding: 1.8rem 1.5rem 2.2rem;
         }
 
-        /* 碑亭风格头部 */
         .tomb-header {
             text-align: center;
             border-bottom: 2px solid #b87c4f;
             margin-bottom: 1.8rem;
             padding-bottom: 0.8rem;
-            position: relative;
         }
 
         .tomb-header h1 {
@@ -71,7 +66,6 @@
             padding-top: 6px;
         }
 
-        /* 恩师像区域 模拟纪念碑 */
         .memorial-statue {
             display: flex;
             flex-direction: column;
@@ -79,22 +73,14 @@
             margin: 20px 0 10px;
         }
 
-        .teacher-icon {
-            width: 110px;
-            height: 110px;
-            background: #c6aa7b;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2), inset 0 1px 3px rgba(255, 255, 200, 0.8);
-            background: linear-gradient(145deg, #dabb8c, #b48b54);
+        .teacher-portrait {
+            width: 150px;
+            object-fit: contain;
+            border-radius: 28px;
+            border: 3px solid #e2c7a5;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+            background-color: #fef3e0;
             margin-bottom: 12px;
-        }
-
-        .teacher-icon span {
-            font-size: 4rem;
-            filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.2));
         }
 
         .teacher-name {
@@ -107,7 +93,6 @@
             letter-spacing: 4px;
             font-family: '华文楷书', 'KaiTi', serif;
             border: 1px solid #e2c7a5;
-            box-shadow: inset 0 1px 2px #fff9, 0 4px 8px rgba(0,0,0,0.05);
         }
 
         .lifespan {
@@ -117,16 +102,13 @@
             background: rgba(230, 210, 180, 0.5);
             padding: 5px 14px;
             border-radius: 30px;
-            backdrop-filter: blur(2px);
         }
 
-        /* 悼词/生平 */
         .eulogy {
             background: #fff9ef;
             padding: 20px 24px;
             border-radius: 48px;
             margin: 28px 0;
-            box-shadow: inset 0 0 0 1px #fffcf5, 0 8px 20px rgba(70, 40, 20, 0.12);
             border: 1px solid #eedbba;
         }
 
@@ -140,32 +122,26 @@
 
         .eulogy .quote {
             font-style: italic;
-            text-indent: 0;
             text-align: center;
             color: #a57048;
-            font-size: 0.95rem;
             border-left: 4px solid #dbbb95;
             padding-left: 18px;
             margin: 12px 0;
         }
 
-        /* 献花·点烛区 */
         .offering-area {
             background: #e7d9ca;
             border-radius: 60px;
-            padding: 18px 18px 22px;
+            padding: 18px;
             margin-bottom: 30px;
             text-align: center;
-            box-shadow: inset 0 1px 4px rgba(255,255,210,0.8), 0 5px 12px rgba(0,0,0,0.1);
         }
 
         .offering-title {
             font-size: 1.25rem;
             color: #5a3a28;
             margin-bottom: 20px;
-            font-weight: 500;
             display: flex;
-            align-items: center;
             justify-content: center;
             gap: 10px;
         }
@@ -192,40 +168,90 @@
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             border-bottom: 2px solid #cfa97c;
         }
 
         .ritual-btn:hover {
             transform: translateY(-2px);
             background: #fffaef;
-            box-shadow: 0 8px 18px rgba(100, 60, 20, 0.2);
-            border-bottom-color: #b46f3a;
         }
 
-        .ritual-btn:active {
-            transform: translateY(1px);
+        .sender-section {
+            background: #faf0e2;
+            border-radius: 48px;
+            padding: 14px 20px;
+            margin: 12px 0;
+            border: 1px solid #e2caad;
         }
 
-        /* 祭品记录板 */
-        .tribute-log {
+        .sender-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .sender-input {
+            flex: 2;
+            min-width: 180px;
+            background: #fffaf2;
+            border: 1px solid #e2caad;
+            border-radius: 48px;
+            padding: 8px 16px;
+            font-family: inherit;
+            font-size: 0.9rem;
+            outline: none;
+        }
+
+        .gift-item-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .gift-item-row input {
+            flex: 2;
+            min-width: 180px;
+            background: #fffaf2;
+            border: 1px solid #e2caad;
+            border-radius: 48px;
+            padding: 8px 16px;
+            font-family: inherit;
+            font-size: 0.9rem;
+            outline: none;
+        }
+
+        .send-gift-btn {
+            background: #b28b65;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 40px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .unified-log {
             background: #faf0e2;
             border-radius: 36px;
             padding: 12px 18px;
-            margin-top: 12px;
-            max-height: 140px;
+            margin-top: 16px;
+            max-height: 180px;
             overflow-y: auto;
             font-size: 0.85rem;
-            color: #593e2c;
             text-align: left;
             border: 1px solid #eddbbc;
-            box-shadow: inset 0 0 0 2px #fff7e8, 0 2px 6px rgba(0,0,0,0.05);
         }
 
-        .tribute-log p {
+        .unified-log p {
             margin: 8px 0;
             border-left: 2px solid #cbaa7a;
             padding-left: 12px;
+            color: #593e2c;
         }
 
         .log-time {
@@ -234,7 +260,46 @@
             margin-right: 10px;
         }
 
-        /* 留言追思板块 */
+        .candle-area {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin: 10px 0;
+            flex-wrap: wrap;
+        }
+
+        .candle {
+            width: 38px;
+            height: 70px;
+            background: #fff3cf;
+            border-radius: 20px 20px 8px 8px;
+            position: relative;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .flame {
+            width: 14px;
+            height: 28px;
+            background: #ffa047;
+            border-radius: 50% 50% 30% 30%;
+            position: absolute;
+            top: -18px;
+            left: 12px;
+            animation: flicker 0.8s infinite alternate;
+        }
+
+        @keyframes flicker {
+            0% {
+                transform: scaleY(1);
+                background: #ff8c3a;
+            }
+
+            100% {
+                transform: scaleY(1.2);
+                background: #ffb347;
+            }
+        }
+
         .message-section {
             background: #fffaf0;
             border-radius: 48px;
@@ -244,7 +309,6 @@
 
         .message-title {
             font-size: 1.3rem;
-            font-weight: 500;
             color: #4e3624;
             border-left: 5px solid #c59464;
             padding-left: 16px;
@@ -258,22 +322,15 @@
             margin-bottom: 20px;
         }
 
-        .input-group input, .input-group textarea {
+        .input-group input,
+        .input-group textarea {
             border: 1px solid #e6cfb5;
             background: #ffffffdb;
             border-radius: 32px;
             padding: 12px 18px;
             font-family: inherit;
             font-size: 0.9rem;
-            resize: vertical;
             outline: none;
-            transition: 0.2s;
-        }
-
-        .input-group input:focus, .input-group textarea:focus {
-            border-color: #bc8f64;
-            box-shadow: 0 0 0 2px rgba(188, 143, 100, 0.2);
-            background: white;
         }
 
         .send-msg {
@@ -283,17 +340,9 @@
             border-radius: 40px;
             color: white;
             font-weight: bold;
-            font-size: 1rem;
             cursor: pointer;
-            transition: 0.2s;
             width: fit-content;
             align-self: flex-end;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-        }
-
-        .send-msg:hover {
-            background: #946f4b;
-            transform: scale(0.97);
         }
 
         .message-list {
@@ -315,64 +364,17 @@
         .msg-name {
             font-weight: bold;
             color: #8b5a2e;
-            margin-right: 12px;
         }
 
         .msg-text {
             color: #3b2a1f;
-            margin: 6px 0 4px;
-            word-break: break-word;
+            margin: 6px 0;
         }
 
         .msg-date {
             font-size: 0.65rem;
             color: #b28a62;
             text-align: right;
-        }
-
-        .empty-msg {
-            text-align: center;
-            color: #b4926e;
-            padding: 20px;
-            font-style: italic;
-        }
-
-        /* 烛光与花瓣特效区域 */
-        .candle-area {
-            display: flex;
-            justify-content: center;
-            gap: 24px;
-            margin: 5px 0 15px;
-            transition: all 0.2s;
-        }
-
-        .candle {
-            width: 38px;
-            height: 70px;
-            background: #fff3cf;
-            border-radius: 20px 20px 8px 8px;
-            position: relative;
-            cursor: pointer;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.2);
-            transition: 0.1s;
-        }
-
-        .flame {
-            width: 14px;
-            height: 28px;
-            background: #ffa047;
-            border-radius: 50% 50% 30% 30%;
-            position: absolute;
-            top: -18px;
-            left: 12px;
-            transform-origin: center bottom;
-            animation: flicker 0.8s infinite alternate;
-            box-shadow: 0 0 6px #ff7e2e;
-        }
-
-        @keyframes flicker {
-            0% { transform: scaleY(1) translateY(0); background: #ff8c3a; opacity: 0.9; width: 12px; left: 13px;}
-            100% { transform: scaleY(1.2) translateY(-2px); background: #ffb347; opacity: 1; width: 15px; left: 11px;}
         }
 
         .flower-petal {
@@ -384,8 +386,15 @@
         }
 
         @keyframes fall {
-            0% { transform: translateY(-20px) rotate(0deg); opacity: 1;}
-            100% { transform: translateY(100vh) rotate(300deg); opacity: 0;}
+            0% {
+                transform: translateY(-20px) rotate(0deg);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(100vh) rotate(300deg);
+                opacity: 0;
+            }
         }
 
         footer {
@@ -393,328 +402,374 @@
             font-size: 0.7rem;
             color: #9b7a5c;
             padding-top: 20px;
-            margin-top: 10px;
             border-top: 1px solid #dfcaaf;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #9b7a5c;
         }
     </style>
 </head>
+
 <body>
-<div class="memorial-container">
-    <div class="paper-bg">
-        <div class="tomb-header">
-            <h1>🌿 刘银老师 🌿</h1>
-            <div class="subtitle">春风化雨 · 桃李思源</div>
-        </div>
+    <div class="memorial-container">
+        <div class="paper-bg">
+            <div class="tomb-header">
+                <h1>🌿 刘银老师 🌿</h1>
+                <div class="subtitle">临川一中 · 春风化雨 桃李思源</div>
+            </div>
 
-        <div class="memorial-statue">
-            <div class="teacher-icon">
-                <span>📖🍃</span>
+            <div class="memorial-statue">
+                <img class="teacher-portrait"
+                 src="https://m.ccw.site/post/692538ef86bbc77f84e3b259/fe05885a-1352-45be-b02a-3ed59bcb4622.jpg"
+                 alt="刘银老师肖像">
+                <div class="teacher-name">刘 银 老 师</div>
+                <div class="lifespan">临川一中 · 语文组 · 师恩永铭</div>
             </div>
-            <div class="teacher-name">刘 银 老 师</div>
-            <div class="lifespan">敬爱的语文引路人 · 永存心间</div>
-        </div>
 
-        <div class="eulogy">
-            <p>刘银老师，从教三十余载，温润如玉，诲人不倦。您用诗书点亮心灵，以墨香滋养年华。三尺讲台，挥洒智慧；一方黑板，写尽春秋。您的微笑如春风，您的教诲似甘霖。虽已远行，但每一篇课文、每一句古韵都化作星辰，指引我们前行。</p>
-            <div class="quote">“桃李不言，下自成蹊。一朝沐杏雨，一生念师恩。”</div>
-            <p>清明虽过，思念不息。在此云端追思园，让我们共寄哀思，献花、点烛、留言，愿恩师在天堂安好，书声常伴。</p>
-        </div>
+            <div class="eulogy">
+                <p>刘银老师，临川一中语文名师，从教数十载，温润如玉，诲人不倦。讲台上，您以诗书传道，用墨香滋养少年心灵；课堂外，您如慈父挚友，关切每一位学子的成长。</p>
+                <div class="quote">“杏坛流芳，师恩似海。临川才乡，幸得先生引路。”</div>
+                <p>清明虽过，思念不息。今立云端追思园，愿您桃李芬芳的教诲长存心间。献一束花，点一盏烛，留一段话，寄无尽感恩。</p>
+            </div>
 
-        <!-- 祭拜区 (献花/点烛) -->
-        <div class="offering-area">
-            <div class="offering-title">
-                <span>🕯️</span> 遥寄追思 <span>🌸</span>
-            </div>
-            <div class="offering-buttons">
-                <button class="ritual-btn" id="flowerBtn">🌸 献花敬师</button>
-                <button class="ritual-btn" id="candleBtn">🕯️ 点亮心烛</button>
-            </div>
-            <!-- 动态蜡烛展示区（点缀） -->
-            <div class="candle-area" id="candleDisplay"></div>
-            <div class="tribute-log" id="tributeLog">
-                <p><span class="log-time">🌱 此刻</span> 清风寄思，默念恩情</p>
-            </div>
-        </div>
+            <div class="offering-area">
+                <div class="offering-title">
+                    <span>🕯️</span> 遥寄追思 · 心意相通 <span>🌸</span>
+                </div>
 
-        <!-- 留言追思板块 -->
-        <div class="message-section">
-            <div class="message-title">💬 寄思留言板</div>
-            <div class="input-group">
-                <input type="text" id="guestName" placeholder="您的姓名 (如: 学生/友人)" value="一位学生">
-                <textarea id="guestMsg" rows="2" placeholder="写下想对刘银老师说的话..."></textarea>
-                <button class="send-msg" id="sendMsgBtn">✍️ 寄出思念</button>
-            </div>
-            <div class="message-list" id="messageList">
-                <div class="empty-msg">待您留下温暖的思念……</div>
-            </div>
-        </div>
+                <div class="sender-section">
+                    <div class="sender-row">
+                        <label>🙏 追思者：</label>
+                        <input type="text" id="unifiedSenderName" class="sender-input" placeholder="您的姓名 / 届别" value="临川学子">
+                    </div>
+                    <div class="gift-item-row">
+                        <input type="text" id="giftItemName" placeholder="礼物名称 (如：诗集、清茶)" value="心香一瓣">
+                        <button class="send-gift-btn" id="sendGiftBtn">🎁 敬赠心意</button>
+                    </div>
+                </div>
 
-        <footer>
-            🌿 云端扫墓 · 师恩长存 🌿<br>
-            无论何时何地，敬意与怀念常在。
-        </footer>
+                <div class="offering-buttons">
+                    <button class="ritual-btn" id="flowerBtn">🌸 献花敬师</button>
+                    <button class="ritual-btn" id="candleBtn">🕯️ 点亮心烛</button>
+                </div>
+
+                <div class="candle-area" id="candleDisplay"></div>
+
+                <div class="unified-log" id="unifiedLog">
+                    <div class="loading">加载中...</div>
+                </div>
+            </div>
+
+            <div class="message-section">
+                <div class="message-title">💬 寄思留言板</div>
+                <div class="input-group">
+                    <input type="text" id="guestName" placeholder="您的姓名" value="临川学子">
+                    <textarea id="guestMsg" rows="2" placeholder="写下想对刘银老师说的话..."></textarea>
+                    <button class="send-msg" id="sendMsgBtn">✍️ 寄出思念</button>
+                </div>
+                <div class="message-list" id="messageList">
+                    <div class="loading">加载中...</div>
+                </div>
+            </div>
+
+            <footer>
+                🌿 临川一中 · 云端追思园 · 师恩长存 🌿
+            </footer>
+        </div>
     </div>
-</div>
 
-<script>
-    // ---------- 存储留言数据 (使用 localStorage 持久化) ----------
-    let messages = [];
+    <script>
+        // ================= Supabase 配置 =================
+    const SUPABASE_URL = 'https://yrtkocalrqslwvaozfzf.supabase.co';
+    const SUPABASE_ANON_KEY = 'sb_publishable_jDZ6SWz7XUIgNuPE6YEKng_6H0p9D8G';
 
-    // 加载本地留言
-    function loadMessages() {
-        const stored = localStorage.getItem('liuyin_memorial_msgs');
-        if(stored) {
-            try{
-                messages = JSON.parse(stored);
-            }catch(e){ messages = [];}
+    // API 基础地址
+    const API_URL = `${SUPABASE_URL}/rest/v1`;
+
+    // 通用 fetch 配置
+    const fetchConfig = (method, body = null) => ({
+        method,
+        headers: {
+            'Content-Type': 'application/json',
+            'apikey': SUPABASE_ANON_KEY,
+            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+        },
+        body: body ? JSON.stringify(body) : null
+    });
+
+    // ================= 留言相关 API =================
+    async function loadComments() {
+        try {
+            const response = await fetch(
+                `${API_URL}/comments?select=*&order=created_at.desc`,
+                fetchConfig('GET')
+            );
+            if (!response.ok) throw new Error('加载留言失败');
+            const comments = await response.json();
+            renderComments(comments);
+        } catch (error) {
+            console.error('加载留言出错:', error);
+            document.getElementById('messageList').innerHTML = '<div class="empty-msg">加载失败，请刷新重试</div>';
         }
-        if(messages.length === 0) {
-            // 添加两条示范留言，更显真情
-            messages = [
-                { name: "往届学子", text: "刘老师，感谢您教会我品读人生这本书，怀念您的课堂。", timestamp: new Date(Date.now() - 86400000).toLocaleString() },
-                { name: "语文课代表", text: "字斟句酌，谆谆如父语；殷殷似友亲。永远感恩您。", timestamp: new Date(Date.now() - 172800000).toLocaleString() }
-            ];
-            saveMessages();
-        }
-        renderMessages();
     }
 
-    function saveMessages() {
-        localStorage.setItem('liuyin_memorial_msgs', JSON.stringify(messages));
+    async function addComment(name, content) {
+        try {
+            const response = await fetch(
+                `${API_URL}/comments`,
+                fetchConfig('POST', { name, content })
+            );
+            if (!response.ok) throw new Error('发送留言失败');
+            await loadComments(); // 重新加载
+            return true;
+        } catch (error) {
+            console.error('发送留言出错:', error);
+            alert('发送失败，请稍后重试');
+            return false;
+        }
     }
 
-    function renderMessages() {
+    function renderComments(comments) {
         const container = document.getElementById('messageList');
-        if(!container) return;
-        if(messages.length === 0){
+        if (!comments || comments.length === 0) {
             container.innerHTML = '<div class="empty-msg">✨ 暂无留言，请写下您的追思 ✨</div>';
             return;
         }
-        container.innerHTML = messages.slice().reverse().map(msg => `
+        container.innerHTML = comments.map(comment => `
             <div class="single-message">
-                <div><span class="msg-name">📖 ${escapeHtml(msg.name)}</span> <span style="font-size:0.7rem; color:#b58a60;">· 致刘银老师</span></div>
-                <div class="msg-text">${escapeHtml(msg.text)}</div>
-                <div class="msg-date">${msg.timestamp || "刚刚"}</div>
+                <div><span class="msg-name">📖 ${escapeHtml(comment.name)}</span> <span style="font-size:0.7rem;">· 致刘银老师</span></div>
+                <div class="msg-text">${escapeHtml(comment.content)}</div>
+                <div class="msg-date">${formatDate(comment.created_at)}</div>
             </div>
         `).join('');
     }
 
-    function escapeHtml(str) {
-        if(!str) return '';
-        return str.replace(/[&<>]/g, function(m) {
-            if(m === '&') return '&amp;';
-            if(m === '<') return '&lt;';
-            if(m === '>') return '&gt;';
-            return m;
-        }).replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, function(c) {
-            return c;
-        });
+    // ================= 追思记录 API (献花/点烛/赠礼) =================
+    async function loadGifts() {
+        try {
+            const response = await fetch(
+                `${API_URL}/gifts?select=*&order=created_at.desc&limit=50`,
+                fetchConfig('GET')
+            );
+            if (!response.ok) throw new Error('加载追思记录失败');
+            const gifts = await response.json();
+            renderGifts(gifts);
+        } catch (error) {
+            console.error('加载追思记录出错:', error);
+            document.getElementById('unifiedLog').innerHTML = '<div class="loading">加载失败，请刷新重试</div>';
+        }
     }
 
-    // 添加新留言
-    function addMessage(name, text) {
-        if(!text.trim()) {
-            alert("请写下思念的话语");
+    async function addGiftRecord(sender, actionType, giftName = null) {
+        try {
+            const body = { sender, action_type: actionType };
+            if (giftName) body.gift_name = giftName;
+            
+            const response = await fetch(
+                `${API_URL}/gifts`,
+                fetchConfig('POST', body)
+            );
+            if (!response.ok) throw new Error('记录失败');
+            await loadGifts(); // 重新加载
+            return true;
+        } catch (error) {
+            console.error('记录出错:', error);
+            alert('操作失败，请稍后重试');
             return false;
         }
-        if(!name.trim()) name = "敬仰者";
-        const newMsg = {
-            name: name.trim().substring(0, 20),
-            text: text.trim().substring(0, 300),
-            timestamp: new Date().toLocaleString('zh-CN')
-        };
-        messages.push(newMsg);
-        saveMessages();
-        renderMessages();
-        return true;
     }
 
-    // ---------- 祭品记录与动态效果 (献花 + 点烛) ----------
-    let tributeRecords = [];  // 存储最近献花/点烛记录
-    const MAX_LOG = 12;
-    const tributeLogDiv = document.getElementById('tributeLog');
-    let activeCandles = 0;     // 当前点燃的蜡烛数量（视觉展示）
-    let candleElements = [];
-
-    // 记录追思行为
-    function addTributeRecord(actionType, detail = "") {
-        const now = new Date();
-        const timeStr = `${now.getMonth()+1}/${now.getDate()} ${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}`;
-        let logText = "";
-        if(actionType === 'flower') {
-            logText = `🌸 敬献鲜花 · 芬芳寄远思`;
-        } else if(actionType === 'candle') {
-            logText = `🕯️ 点亮心烛 · 烛光映师魂`;
-        }
-        tributeRecords.unshift({ text: logText, time: timeStr });
-        if(tributeRecords.length > MAX_LOG) tributeRecords.pop();
-        renderTributeLog();
-        // 额外触发屏幕飘落花瓣 或 烛光特效
-        if(actionType === 'flower') {
-            createFloatingPetals(20);
-        } else if(actionType === 'candle') {
-            createFloatingSparkles(15);
-            updateCandleVisuals(true);
-        }
-    }
-
-    function renderTributeLog() {
-        if(!tributeLogDiv) return;
-        if(tributeRecords.length === 0){
-            tributeLogDiv.innerHTML = '<p><span class="log-time">🍃 静默</span> 待您献上追思</p>';
+    function renderGifts(gifts) {
+        const container = document.getElementById('unifiedLog');
+        if (!gifts || gifts.length === 0) {
+            container.innerHTML = '<p><span class="log-time">🍃 静默</span> 待您留下追思印记</p>';
             return;
         }
         let html = '';
-        tributeRecords.forEach(rec => {
-            html += `<p><span class="log-time">${rec.time}</span> ${rec.text}</p>`;
+        gifts.forEach(gift => {
+            let line = '';
+            if (gift.action_type === 'flower') {
+                line = `🌸 献花 · ${escapeHtml(gift.sender)} 敬献鲜花`;
+            } else if (gift.action_type === 'candle') {
+                line = `🕯️ 点烛 · ${escapeHtml(gift.sender)} 点亮心烛`;
+            } else if (gift.action_type === 'gift') {
+                line = `🎁 赠礼 · ${escapeHtml(gift.sender)} 敬赠「${escapeHtml(gift.gift_name || '心意')}」`;
+            } else {
+                line = `✨ ${escapeHtml(gift.sender)} 寄托思念`;
+            }
+            html += `<p><span class="log-time">${formatDate(gift.created_at)}</span> ${line}</p>`;
         });
-        tributeLogDiv.innerHTML = html;
+        container.innerHTML = html;
     }
 
-    // 创建花瓣飘落效果
+    // ================= 辅助函数 =================
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        });
+    }
+
+    function formatDate(dateStr) {
+        if (!dateStr) return '刚刚';
+        const date = new Date(dateStr);
+        return `${date.getFullYear()}/${date.getMonth()+1}/${date.getDate()}
+        ${date.getHours().toString().padStart(2,'0')}:${date.getMinutes().toString().padStart(2,'0')}`;
+    }
+
     function createFloatingPetals(count) {
-        for(let i=0;i<count;i++) {
+        for (let i = 0; i < count; i++) {
             const petal = document.createElement('div');
             petal.className = 'flower-petal';
-            const petalType = ['🌸','🌼','🌺','🍂','🍃','🌸'][Math.floor(Math.random()*6)];
-            petal.innerHTML = petalType;
+            const types = ['🌸', '🌼', '🌺', '🍂', '🍃', '🌸', '🌿'];
+            petal.innerHTML = types[Math.floor(Math.random() * types.length)];
             petal.style.left = Math.random() * 100 + '%';
-            petal.style.fontSize = (1 + Math.random() * 1.2) + 'rem';
-            petal.style.opacity = 0.7 + Math.random()*0.3;
+            petal.style.fontSize = (1 + Math.random() * 1.3) + 'rem';
+            petal.style.opacity = 0.7 + Math.random() * 0.3;
             const duration = 3 + Math.random() * 5;
             petal.style.animation = `fall ${duration}s linear forwards`;
             document.body.appendChild(petal);
-            setTimeout(() => { if(petal && petal.remove) petal.remove(); }, duration * 1000);
+            setTimeout(() => petal.remove(), duration * 1000);
         }
     }
 
     function createFloatingSparkles(count) {
-        for(let i=0;i<count;i++) {
+        for (let i = 0; i < count; i++) {
             const spark = document.createElement('div');
             spark.className = 'flower-petal';
             spark.innerHTML = '✨';
             spark.style.left = Math.random() * 100 + '%';
             spark.style.fontSize = '1.1rem';
             spark.style.opacity = 0.9;
-            spark.style.animation = `fall ${2+Math.random()*3}s linear forwards`;
+            spark.style.animation = `fall ${2 + Math.random() * 3}s linear forwards`;
             document.body.appendChild(spark);
             setTimeout(() => spark.remove(), 3000);
         }
     }
 
-    // 更新蜡烛视觉组件 (最多同时展示3根蜡烛，烛光摇曳)
-    function updateCandleVisuals(addCandle = true) {
+    // 蜡烛视觉效果（纯前端，与数据库无关）
+    let activeCandles = 0;
+    function updateCandleVisuals() {
         const candleContainer = document.getElementById('candleDisplay');
-        if(!candleContainer) return;
-        if(addCandle) {
-            if(activeCandles >= 5) {
-                // 最多5根，但轻轻提示
-                const tip = document.createElement('div');
-                tip.innerText = '烛光满堂，思念深厚。';
-                tip.style.fontSize='0.7rem';tip.style.color='#b87c4f';tip.style.padding='4px';
-                candleContainer.appendChild(tip);
-                setTimeout(()=>tip.remove(),1200);
-                return;
-            }
-            activeCandles++;
-            const candleDiv = document.createElement('div');
-            candleDiv.className = 'candle';
-            candleDiv.style.margin = '0 2px';
-            const flame = document.createElement('div');
-            flame.className = 'flame';
-            candleDiv.appendChild(flame);
-            candleContainer.appendChild(candleDiv);
-            // 自动移除旧蜡烛太多时的优雅处理，保持最多5根，多了滑动展示
-            while(candleContainer.children.length > 5) {
-                candleContainer.removeChild(candleContainer.firstChild);
-                activeCandles--;
-            }
-        } else {
-            // 不需要移除，只用献花时不会清除蜡烛，但重置用 (保留当前)
+        if (!candleContainer) return;
+        if (activeCandles >= 6) {
+            const tip = document.createElement('div');
+            tip.innerText = '烛光满堂，思念深厚。';
+            tip.style.fontSize = '0.7rem';
+            tip.style.color = '#b87c4f';
+            tip.style.padding = '4px';
+            candleContainer.appendChild(tip);
+            setTimeout(() => tip.remove(), 1200);
+            return;
+        }
+        activeCandles++;
+        const candleDiv = document.createElement('div');
+        candleDiv.className = 'candle';
+        const flame = document.createElement('div');
+        flame.className = 'flame';
+        candleDiv.appendChild(flame);
+        candleContainer.appendChild(candleDiv);
+        while (candleContainer.children.length > 6) {
+            candleContainer.removeChild(candleContainer.firstChild);
+            activeCandles--;
         }
     }
 
-    // 重置所有蜡烛（可选，用于清明风格，但保持累积更感人，但提供手动重置？不，累积烛光代表持续思念）
-    // 但每次点亮增加一根蜡烛且不过度清除
-
-    // 献花逻辑 + 记录 + 花瓣
-    function doFlower() {
-        addTributeRecord('flower');
-        // 额外提醒
-        const flowerMsg = document.createElement('div');
-        flowerMsg.innerText = '🌸 感谢您的鲜花，刘老师定能感知 🌸';
-        flowerMsg.style.position = 'fixed'; flowerMsg.style.bottom='20px'; flowerMsg.style.left='20px';
-        flowerMsg.style.backgroundColor='#f7ebd4'; flowerMsg.style.padding='8px 18px'; flowerMsg.style.borderRadius='40px';
-        flowerMsg.style.zIndex='1000'; flowerMsg.style.fontSize='0.85rem'; flowerMsg.style.boxShadow='0 2px 12px rgba(0,0,0,0.2)';
-        document.body.appendChild(flowerMsg);
-        setTimeout(()=>flowerMsg.remove(), 2000);
-    }
-
-    function doCandle() {
-        addTributeRecord('candle');
-        const candleMsg = document.createElement('div');
-        candleMsg.innerText = '🕯️ 心灯一盏，师恩永明 🕯️';
-        candleMsg.style.position = 'fixed'; candleMsg.style.bottom='20px'; candleMsg.style.right='20px';
-        candleMsg.style.backgroundColor='#f2e3d2'; candleMsg.style.padding='8px 18px'; candleMsg.style.borderRadius='40px';
-        candleMsg.style.zIndex='1000'; candleMsg.style.fontSize='0.85rem';
-        document.body.appendChild(candleMsg);
-        setTimeout(()=>candleMsg.remove(), 2000);
-    }
-
-    // 初始化加载一些默认记录 (庄重)
-    function initTributeLog() {
-        tributeRecords = [];
-        addTributeRecord('flower');   // 默认为老师献上一束花
-        addTributeRecord('candle');   // 默认为老师点一盏灯
-        // 额外增加一些虚拟敬意（代表全体）
-        setTimeout(() => {
-            renderTributeLog();
-        }, 50);
-    }
-
-    // 页面加载及交互绑定
-    document.addEventListener('DOMContentLoaded', () => {
-        loadMessages();     // 留言板载入
-        initTributeLog();   // 祭品记录初始化并展示烛台（默认展示两根蜡烛）
-        // 默认展示两根蜡烛视觉: 
+    function initDefaultCandles() {
         const candleContainer = document.getElementById('candleDisplay');
-        if(candleContainer && candleContainer.children.length === 0) {
-            // 初始展示两根代表思念长明
-            for(let i=0;i<2;i++) {
-                const initCandle = document.createElement('div');
-                initCandle.className = 'candle';
+        if (candleContainer && candleContainer.children.length === 0) {
+            for (let i = 0; i < 2; i++) {
+                const candleDiv = document.createElement('div');
+                candleDiv.className = 'candle';
                 const flame = document.createElement('div');
                 flame.className = 'flame';
-                initCandle.appendChild(flame);
-                candleContainer.appendChild(initCandle);
+                candleDiv.appendChild(flame);
+                candleContainer.appendChild(candleDiv);
                 activeCandles++;
             }
         }
-        // 献花按钮
-        const flowerBtn = document.getElementById('flowerBtn');
-        const candleBtn = document.getElementById('candleBtn');
-        if(flowerBtn) flowerBtn.addEventListener('click', doFlower);
-        if(candleBtn) candleBtn.addEventListener('click', doCandle);
-        
-        // 发送留言
-        const sendBtn = document.getElementById('sendMsgBtn');
-        const guestNameInp = document.getElementById('guestName');
-        const guestMsgInp = document.getElementById('guestMsg');
-        if(sendBtn) {
-            sendBtn.addEventListener('click', () => {
-                const name = guestNameInp ? guestNameInp.value : "学生";
-                const msg = guestMsgInp ? guestMsgInp.value : "";
-                if(addMessage(name, msg)) {
-                    guestMsgInp.value = "";
-                    // 添加留言时自动追加一次"思念寄语"记录到祭品板中
-                    addTributeRecord('flower', "留言寄托哀思");
-                    createFloatingPetals(8);
-                } else {
-                    alert("请写下寄语内容~");
-                }
-            });
-        }
+    }
+
+    // ================= 事件绑定 =================
+    document.addEventListener('DOMContentLoaded', () => {
+        // 加载数据
+        loadComments();
+        loadGifts();
+        initDefaultCandles();
+
+        const senderInput = document.getElementById('unifiedSenderName');
+        const giftItemInput = document.getElementById('giftItemName');
+
+        // 献花
+        document.getElementById('flowerBtn').addEventListener('click', async () => {
+            let sender = senderInput?.value.trim() || '敬仰者';
+            if (sender === '') sender = '敬仰者';
+            const success = await addGiftRecord(sender, 'flower');
+            if (success) {
+                createFloatingPetals(18);
+                const msg = document.createElement('div');
+                msg.innerText = `🌸 ${sender} 献上一束鲜花`;
+                msg.style.cssText = 'position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#f2e3d2;padding:6px 20px;border-radius:40px;z-index:1000';
+                document.body.appendChild(msg);
+                setTimeout(() => msg.remove(), 2000);
+            }
+        });
+
+        // 点烛
+        document.getElementById('candleBtn').addEventListener('click', async () => {
+            let sender = senderInput?.value.trim() || '敬仰者';
+            if (sender === '') sender = '敬仰者';
+            const success = await addGiftRecord(sender, 'candle');
+            if (success) {
+                createFloatingSparkles(16);
+                updateCandleVisuals();
+                const msg = document.createElement('div');
+                msg.innerText = `🕯️ ${sender} 点亮追思烛光`;
+                msg.style.cssText = 'position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#f2e3d2;padding:6px 20px;border-radius:40px;z-index:1000';
+                document.body.appendChild(msg);
+                setTimeout(() => msg.remove(), 2000);
+            }
+        });
+
+        // 赠礼
+        document.getElementById('sendGiftBtn').addEventListener('click', async () => {
+            let sender = senderInput?.value.trim() || '敬仰者';
+            if (sender === '') sender = '敬仰者';
+            let giftVal = giftItemInput?.value.trim() || '心意';
+            if (giftVal === '') giftVal = '心意';
+            const success = await addGiftRecord(sender, 'gift', giftVal);
+            if (success) {
+                createFloatingPetals(10);
+                const msg = document.createElement('div');
+                msg.innerText = `🎁 ${sender} 敬赠「${giftVal}」`;
+                msg.style.cssText = 'position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#f2e3d2;padding:6px 20px;border-radius:40px;z-index:1000';
+                document.body.appendChild(msg);
+                setTimeout(() => msg.remove(), 2000);
+            }
+        });
+
+        // 留言
+        document.getElementById('sendMsgBtn').addEventListener('click', async () => {
+            const name = document.getElementById('guestName')?.value.trim() || '临川学子';
+            const content = document.getElementById('guestMsg')?.value.trim();
+            if (!content) {
+                alert('请写下寄语内容');
+                return;
+            }
+            const success = await addComment(name, content);
+            if (success) {
+                document.getElementById('guestMsg').value = '';
+                createFloatingPetals(8);
+            }
+        });
     });
-</script>
+    </script>
 </body>
+
 </html>
