@@ -1,11 +1,22 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-teacher="liuyin" style="--primary-dark: #3e2a21;
+    --primary-light: #6b4c3b;
+    --accent-gold: #b87c4f;
+    --accent-warm: #c59464;
+    --bg-paper: #fef8ef;
+    --bg-warm: #ece4d7;
+    --border-light: #eedbba;
+    --body-bg-start: #1a2a2e;
+    --body-bg-end: #24343a;
+    --header-symbol: "🌿";
+    --footer-icon: "🌿";
+    --math-symbols-display: none;">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>云端追思</title>
-    <link rel="stylesheet" href="style1.css">
+    <title>刘银老师 · 云端追思园 | 临川一中</title>
+    <link rel="stylesheet" href="style2.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -13,33 +24,35 @@
 </head>
 
 <body>
-    <div class="memorial-container fade-in">
+    <div class="memorial-container fade-in" data-teacher="liuyin">
         <div class="paper-bg">
-            <!-- 头部碑亭 -->
             <div class="tomb-header slide-down">
-                <h1>🌿 刘银老师 🌿</h1>
+                <h1><span class="header-symbol">🌿</span> 刘银老师 <span class="header-symbol">🌿</span></h1>
                 <div class="subtitle">临川一中 · 春风化雨 桃李思源</div>
             </div>
 
-            <!-- 恩师肖像区 -->
             <div class="memorial-statue scale-in">
                 <div class="portrait-wrapper" style="display: none;">
                     <img class="teacher-portrait" 
                          src="https://m.ccw.site/post/692538ef86bbc77f84e3b259/fe05885a-1352-45be-b02a-3ed59bcb4622.jpg"
                          alt="刘银老师肖像">
                 </div>
+                <div class="math-symbols">
+                    <span>📖</span>
+                    <span>🍃</span>
+                    <span>✍️</span>
+                    <span>📚</span>
+                </div>
                 <div class="teacher-name">刘 银 老 师</div>
                 <div class="lifespan">临川一中 · 语文组 · 师恩永铭</div>
             </div>
 
-            <!-- 悼词区 -->
             <div class="eulogy fade-in-up">
                 <p>刘银老师，临川一中语文名师，从教数十载，温润如玉，诲人不倦。讲台上，您以诗书传道，用墨香滋养少年心灵；课堂外，您如慈父挚友，关切每一位学子的成长。</p>
                 <div class="quote">“杏坛流芳，师恩似海。临川才乡，幸得先生引路。”</div>
                 <p>清明虽过，思念不息。今立云端追思园，愿您桃李芬芳的教诲长存心间。献一束花，点一盏烛，留一段话，寄无尽感恩。</p>
             </div>
 
-            <!-- 追思区：献花/点烛/赠礼 -->
             <div class="offering-area fade-in-up delay-1">
                 <div class="offering-title">
                     <span class="title-icon pulse">🕯️</span>
@@ -50,10 +63,10 @@
                 <div class="sender-section">
                     <div class="sender-row">
                         <label class="sender-label">🙏 追思者：</label>
-                        <input type="text" id="unifiedSenderName" class="sender-input" placeholder="您的姓名 / 届别" value="临川学子">
+                        <input type="text" id="unifiedSenderName" class="sender-input" placeholder="您的姓名 / 届别" value="">
                     </div>
                     <div class="gift-item-row">
-                        <input type="text" id="giftItemName" class="gift-input" placeholder="礼物名称 (如：诗集、清茶)" value="心香一瓣">
+                        <input type="text" id="giftItemName" class="gift-input" placeholder="礼物名称 (如：诗集、清茶)" value="">
                         <button class="send-gift-btn" id="sendGiftBtn">
                             <span>🎁</span> 敬赠心意
                         </button>
@@ -78,7 +91,6 @@
                 </div>
             </div>
 
-            <!-- 留言板区 -->
             <div class="message-section fade-in-up delay-2">
                 <div class="message-title">💬 寄思留言板</div>
                 <div class="input-group">
@@ -96,13 +108,13 @@
             </div>
 
             <footer class="fade-in-up delay-3">
-                <p>🌿 临川一中 · 云端追思园 · 师恩长存 🌿</p>
+                <p><span class="footer-icon">🌿</span> 临川一中 · 云端追思园 · 师恩长存 <span class="footer-icon">🌿</span></p>
                 <p class="footer-note">每一份心意都将被永远铭记</p>
             </footer>
         </div>
     </div>
 
-    <script src="script1.js"></script>
+    <script src="script2.js"></script>
 </body>
 
 </html>
