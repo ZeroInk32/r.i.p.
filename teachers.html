@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>临川一中 · 云端追思园</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1a2a2e 0%, #2a3a2e 100%);
+            font-family: 'Noto Serif SC', 'Segoe UI', '华文楷书', serif;
+            padding: 40px 20px;
+        }
+
+        /* 主容器 */
+        .home-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* 标题区 */
+        .hero {
+            text-align: center;
+            margin-bottom: 60px;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        .hero h1 {
+            font-size: 2.8rem;
+            color: #fef3e0;
+            letter-spacing: 8px;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+            margin-bottom: 16px;
+        }
+
+        .hero .subtitle {
+            font-size: 1rem;
+            color: #d4c5a8;
+            border-top: 1px solid rgba(220, 200, 160, 0.5);
+            border-bottom: 1px solid rgba(220, 200, 160, 0.5);
+            display: inline-block;
+            padding: 8px 24px;
+            letter-spacing: 2px;
+        }
+
+        /* 卡片网格 */
+        .teachers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+            margin-bottom: 60px;
+        }
+
+        /* 教师卡片 */
+        .teacher-card {
+            background: rgba(250, 245, 235, 0.92);
+            backdrop-filter: blur(4px);
+            border-radius: 48px;
+            padding: 32px 24px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(230, 210, 170, 0.5);
+            animation: fadeInUp 0.6s ease-out forwards;
+            opacity: 0;
+        }
+
+        .teacher-card:nth-child(1) { animation-delay: 0.1s; }
+        .teacher-card:nth-child(2) { animation-delay: 0.2s; }
+
+        .teacher-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            background: rgba(255, 252, 245, 0.96);
+        }
+
+        /* 语文老师卡片专属 */
+        .card-chinese {
+            border-top: 5px solid #b87c4f;
+        }
+
+        /* 数学老师卡片专属 */
+        .card-math {
+            border-top: 5px solid #8b8c3c;
+        }
+
+        /* 头像占位 */
+        .avatar {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            background: linear-gradient(135deg, #fef3e0, #fae8d4);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .teacher-card:hover .avatar {
+            transform: scale(1.05);
+        }
+
+        .card-chinese .avatar {
+            background: linear-gradient(135deg, #fef3e0, #f0e0c8);
+        }
+
+        .card-math .avatar {
+            background: linear-gradient(135deg, #f0ede0, #e6e2d0);
+        }
+
+        .teacher-name {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #3e2a21;
+            margin-bottom: 8px;
+            letter-spacing: 4px;
+        }
+
+        .teacher-dept {
+            font-size: 0.9rem;
+            color: #7c5a42;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px dashed #d4c0a0;
+            display: inline-block;
+        }
+
+        .teacher-bio {
+            font-size: 0.85rem;
+            color: #5a4a3a;
+            line-height: 1.7;
+            margin: 16px 0;
+            padding: 0 8px;
+        }
+
+        .enter-btn {
+            background: linear-gradient(135deg, #b28b65, #9e7652);
+            border: none;
+            padding: 10px 28px;
+            border-radius: 40px;
+            color: white;
+            font-weight: 600;
+            font-size: 1rem;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-math .enter-btn {
+            background: linear-gradient(135deg, #8b9a5c, #7a8a4e);
+        }
+
+        .enter-btn:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.05);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        /* 寄语区 */
+        .memorial-note {
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(4px);
+            border-radius: 48px;
+            padding: 28px 32px;
+            text-align: center;
+            animation: fadeInUp 0.6s ease-out 0.3s forwards;
+            opacity: 0;
+            border: 1px solid rgba(255, 245, 220, 0.3);
+        }
+
+        .memorial-note p {
+            color: #e8dcc8;
+            font-size: 0.95rem;
+            line-height: 1.8;
+            letter-spacing: 1px;
+        }
+
+        .memorial-note .quote {
+            font-style: italic;
+            margin-top: 12px;
+            color: #c8b890;
+            font-size: 0.85rem;
+        }
+
+        /* 页脚 */
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            color: #9bae8a;
+            font-size: 0.7rem;
+            animation: fadeInUp 0.6s ease-out 0.4s forwards;
+            opacity: 0;
+        }
+
+        /* 动画 */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* 响应式 */
+        @media (max-width: 640px) {
+            .hero h1 {
+                font-size: 2rem;
+                letter-spacing: 4px;
+            }
+            .teachers-grid {
+                gap: 20px;
+            }
+            .teacher-card {
+                padding: 24px 16px;
+            }
+            .teacher-name {
+                font-size: 1.5rem;
+            }
+            .memorial-note {
+                padding: 20px;
+            }
+        }
+
+        /* 装饰性浮动元素 */
+        .floating-deco {
+            position: fixed;
+            pointer-events: none;
+            font-size: 2rem;
+            opacity: 0.1;
+            z-index: -1;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="home-container">
+        <div class="hero">
+            <h1>🌿 云端追思园 🌿</h1>
+            <div class="subtitle">临川一中 · 师恩永铭</div>
+        </div>
+
+        <div class="teachers-grid">
+            <!-- 刘银老师卡片 -->
+            <div class="teacher-card card-chinese" onclick="location.href='ly.html'">
+                <div class="avatar">📖</div>
+                <div class="teacher-name">刘 银 老 师</div>
+                <div class="teacher-dept">语文组 · 春风化雨</div>
+                <div class="teacher-bio">
+                    从教数十载，温润如玉，诲人不倦。<br>
+                    以诗书传道，用墨香滋养少年心灵。
+                </div>
+                <button class="enter-btn">
+                    <span>🌿</span> 进入追思 <span>🌸</span>
+                </button>
+            </div>
+
+            <!-- 黎家玲老师卡片 -->
+            <div class="teacher-card card-math" onclick="location.href='ljl.html'">
+                <div class="avatar">📐</div>
+                <div class="teacher-name">黎 家 玲 老 师</div>
+                <div class="teacher-dept">数学组 · 严谨治学</div>
+                <div class="teacher-bio">
+                    执教三十余载，循循善诱。<br>
+                    用公式推导真理，以几何构建思维。
+                </div>
+                <button class="enter-btn">
+                    <span>📐</span> 进入追思 <span>✨</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="memorial-note">
+            <p>桃李不言，下自成蹊。一朝沐杏雨，一生念师恩。</p>
+            <p class="quote">无论何时何地，敬意与怀念常在。献一束花，点一盏烛，留一段话，寄无尽感恩。</p>
+        </div>
+
+        <footer>
+            <p>临川一中 · 云端追思园 | 每一份心意都将被永远铭记</p>
+        </footer>
+    </div>
+
+    <script>
+        // 简单的入场后清除加载状态
+        document.addEventListener('DOMContentLoaded', () => {
+            // 可以添加一些简单的装饰浮动效果
+            console.log('欢迎来到临川一中云端追思园');
+        });
+    </script>
+</body>
+
+</html>
