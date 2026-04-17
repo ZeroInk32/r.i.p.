@@ -1,12 +1,5 @@
 /* ================= 全局变量 ================= */
 :root {
-    --primary-dark: #3e2a21;
-    --primary-light: #6b4c3b;
-    --accent-gold: #b87c4f;
-    --accent-warm: #c59464;
-    --bg-paper: #fef8ef;
-    --bg-warm: #ece4d7;
-    --border-light: #eedbba;
     --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
     --shadow-md: 0 8px 20px rgba(0, 0, 0, 0.1);
     --shadow-lg: 0 25px 40px rgba(0, 0, 0, 0.2);
