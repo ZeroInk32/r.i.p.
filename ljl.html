@@ -1,16 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN" data-teacher="lijialing" style="--primary-dark: #2c3e2f;
-    --primary-light: #5a6e5c;
-    --accent-gold: #8b8c3c;
-    --accent-warm: #9b8e5c;
-    --bg-paper: #f5f3e8;
-    --bg-warm: #e2e0d0;
-    --border-light: #d4d0bc;
-    --body-bg-start: #1e2a1e;
-    --body-bg-end: #2a3a2a;
-    --header-symbol: "📐";
-    --footer-icon: "📐";
-    --math-symbols-display: flex;">
+<html lang="zh-CN" data-teacher="lijialing" data-teacher-name="黎家玲老师" data-teacher-dept="数学组" data-teacher-icon="📐">
 
 <head>
     <meta charset="UTF-8">
@@ -19,12 +8,28 @@
     <link rel="stylesheet" href="style2.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📐</text></svg>">
+    <style>
+        /* 黎家玲老师主题覆盖 */
+        :root {
+            --primary-dark: #2c3e2f;
+            --primary-light: #5a6e5c;
+            --accent-gold: #8b8c3c;
+            --accent-warm: #9b8e5c;
+            --bg-paper: #f5f3e8;
+            --bg-warm: #e2e0d0;
+            --border-light: #d4d0bc;
+            --body-bg-start: #1e2a1e;
+            --body-bg-end: #2a3a2a;
+            --header-symbol: "📐";
+            --footer-icon: "📐";
+        }
+    </style>
 </head>
 
 <body>
-    <div class="memorial-container fade-in" data-teacher="lijialing">
+    <div class="memorial-container fade-in">
         <div class="paper-bg">
             <div class="tomb-header slide-down">
                 <h1><span class="header-symbol">📐</span> 黎家玲老师 <span class="header-symbol">📐</span></h1>
@@ -32,7 +37,7 @@
             </div>
 
             <div class="memorial-statue scale-in">
-                <div class="math-symbols">
+                <div class="math-symbols" id="teacherSymbols">
                     <span>π</span>
                     <span>∫</span>
                     <span>∑</span>

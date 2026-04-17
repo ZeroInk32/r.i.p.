@@ -757,10 +757,11 @@ body {
 /* ================= 花瓣特效 ================= */
 .flower-petal {
     position: fixed;
+    top: 0;
     pointer-events: none;
     z-index: 9999;
     font-size: 1.5rem;
-    animation: fall linear forwards;
+    animation: fall 3s linear forwards;
 }
 
 @keyframes fall {

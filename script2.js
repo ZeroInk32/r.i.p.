@@ -15,13 +15,29 @@ const fetchConfig = (method, body = null) => ({
     body: body ? JSON.stringify(body) : null
 });
 
-// ================= 获取当前老师标识 =================
 function getTeacherId() {
-    const container = document.querySelector('.memorial-container');
-    if (container) {
-        return container.getAttribute('data-teacher') || 'liuyin';
+    const htmlElement = document.documentElement;
+    const teacherId = htmlElement.getAttribute('data-teacher');
+    if (!teacherId) {
+        console.warn('未设置 data-teacher 属性，使用默认值');
+        return 'default';
     }
-    return 'liuyin';
+    return teacherId;
+}
+
+function getTeacherName() {
+    const htmlElement = document.documentElement;
+    const teacherName = htmlElement.getAttribute('data-teacher-name');
+    if (teacherName) return teacherName;
+    // 兼容旧格式：从页面元素读取
+    const nameElement = document.querySelector('.teacher-name');
+    return nameElement ? nameElement.innerText : '老师';
+}
+
+function getTeacherIcon() {
+    const htmlElement = document.documentElement;
+    const icon = htmlElement.getAttribute('data-teacher-icon');
+    return icon || '✨';
 }
 
 // ================= 留言相关 API =================
@@ -59,9 +75,8 @@ async function addComment(name, content) {
 }
 
 function renderComments(comments) {
-    const teacherId = getTeacherId();
-    const teacherName = teacherId === 'liuyin' ? '刘银老师' : '黎家玲老师';
-    const nameIcon = teacherId === 'liuyin' ? '📖' : '📐';
+    const teacherName = getTeacherName();
+    const teacherIcon = getTeacherIcon();
     
     const container = document.getElementById('messageList');
     if (!comments || comments.length === 0) {
@@ -71,7 +86,7 @@ function renderComments(comments) {
     container.innerHTML = comments.map(comment => `
         <div class="single-message">
             <div>
-                <span class="msg-name">${nameIcon} ${escapeHtml(comment.name)}</span>
+                <span class="msg-name">${teacherIcon} ${escapeHtml(comment.name)}</span>
                 <span style="font-size:0.7rem; opacity:0.7;"> · 致${teacherName}</span>
             </div>
             <div class="msg-text">${escapeHtml(comment.content)}</div>
@@ -159,9 +174,12 @@ function formatDate(dateStr) {
 
 function createFloatingPetals(count) {
     const teacherId = getTeacherId();
-    const types = teacherId === 'liuyin' 
-        ? ['🌸', '🌼', '🌺', '🍂', '🍃', '🌸', '🌿', '📖', '🍃']
-        : ['🌸', '🌼', '🌺', '🍂', '🍃', '🌸', '🌿', '📐', 'π'];
+    // 根据老师不同使用不同的飘落符号
+    const typesMap = {
+        'liuyin': ['🌸', '🌼', '🌺', '🍂', '🍃', '🌸', '🌿', '📖', '🍃'],
+        'lijialing': ['🌸', '🌼', '🌺', '🍂', '🍃', '🌸', '🌿', '📐', 'π']
+    };
+    const types = typesMap[teacherId] || ['🌸', '🌼', '🌺', '🍂', '🍃', '🌸', '🌿', '✨'];
     
     for (let i = 0; i < count; i++) {
         const petal = document.createElement('div');
@@ -233,7 +251,7 @@ function initDefaultCandles() {
     }
 }
 
-function showToast(message, emoji = '', isError = false) {
+function showToast(message, emoji = '') {
     const toast = document.createElement('div');
     toast.innerText = `${emoji} ${message}`;
     toast.style.cssText = `
@@ -241,7 +259,7 @@ function showToast(message, emoji = '', isError = false) {
         bottom: 24px;
         left: 50%;
         transform: translateX(-50%) translateY(20px);
-        background: ${isError ? '#8b5a2ee6' : '#2f241be6'};
+        background: #2f241be6;
         backdrop-filter: blur(8px);
         color: #fef3e0;
         padding: 10px 24px;
@@ -267,36 +285,23 @@ function showToast(message, emoji = '', isError = false) {
     }, 2500);
 }
 
-// 检查姓名是否有效
-function isValidName(name) {
-    return name && name.trim() !== '';
-}
-
 // ================= 事件绑定与初始化 =================
 document.addEventListener('DOMContentLoaded', () => {
     const teacherId = getTeacherId();
-    const storageKey = `memorial_name`;  // 统一 key，跨老师共享
-
-    // 从 localStorage 读取保存的姓名（如果有）
-    const savedName = localStorage.getItem(storageKey) || '';
+    const STORAGE_KEY = 'memorial_student_name';
+    const savedName = localStorage.getItem(STORAGE_KEY) || '';
 
     const senderInput = document.getElementById('unifiedSenderName');
     const giftItemInput = document.getElementById('giftItemName');
     const guestNameInput = document.getElementById('guestName');
 
-    // 设置初始值（如果保存过姓名则显示，否则为空）
     senderInput.value = savedName;
     guestNameInput.value = savedName;
 
-    // 同步两个名称输入框
     const syncName = (source, target) => {
-        const newName = source.value;
+        const newName = source.value.trim() || '';
         target.value = newName;
-        if (isValidName(newName)) {
-            localStorage.setItem(storageKey, newName.trim());
-        } else {
-            localStorage.removeItem(storageKey);
-        }
+        localStorage.setItem(STORAGE_KEY, newName);
     };
 
     senderInput.addEventListener('input', () => syncName(senderInput, guestNameInput));
@@ -309,12 +314,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 献花
     document.getElementById('flowerBtn').addEventListener('click', async () => {
-        let sender = senderInput.value.trim();
-        if (!isValidName(sender)) {
-            showToast('请先填写您的姓名', '🙏', true);
-            senderInput.focus();
-            return;
-        }
+        let sender = senderInput.value.trim() || '';
+        if (sender === '') sender = '';
         
         const btn = document.getElementById('flowerBtn');
         btn.style.transform = 'scale(0.95)';
@@ -329,12 +330,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 点烛
     document.getElementById('candleBtn').addEventListener('click', async () => {
-        let sender = senderInput.value.trim();
-        if (!isValidName(sender)) {
-            showToast('请先填写您的姓名', '🙏', true);
-            senderInput.focus();
-            return;
-        }
+        let sender = senderInput.value.trim() || '';
+        if (sender === '') sender = '';
         
         const btn = document.getElementById('candleBtn');
         btn.style.transform = 'scale(0.95)';
@@ -350,12 +347,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 赠礼
     document.getElementById('sendGiftBtn').addEventListener('click', async () => {
-        let sender = senderInput.value.trim();
-        if (!isValidName(sender)) {
-            showToast('请先填写您的姓名', '🙏', true);
-            senderInput.focus();
-            return;
-        }
+        let sender = senderInput.value.trim() || '';
+        if (sender === '') sender = '';
         let giftVal = giftItemInput.value.trim() || '心意';
         if (giftVal === '') giftVal = '心意';
         
@@ -372,15 +365,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 留言
     document.getElementById('sendMsgBtn').addEventListener('click', async () => {
-        const name = guestNameInput.value.trim();
-        if (!isValidName(name)) {
-            showToast('请先填写您的姓名', '🙏', true);
-            guestNameInput.focus();
-            return;
-        }
+        const name = guestNameInput.value.trim() || '';
         const content = document.getElementById('guestMsg').value.trim();
         if (!content) {
-            showToast('请写下寄语内容', '📝', true);
+            const toast = document.createElement('div');
+            toast.innerText = '📝 请写下寄语内容';
+            toast.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#8b5a2ee6;color:#fef3e0;padding:8px 20px;border-radius:48px;z-index:10000;font-size:0.8rem;';
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 2000);
             return;
         }
         
@@ -392,8 +384,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (success) {
             document.getElementById('guestMsg').value = '';
             createFloatingPetals(10);
-            const emoji = teacherId === 'liuyin' ? '📖' : '📐';
-            showToast(`${name} 留下思念寄语`, emoji);
+            const icon = getTeacherIcon();
+            showToast(`${name} 留下思念寄语`, icon);
         }
     });
 });

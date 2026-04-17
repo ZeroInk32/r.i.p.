@@ -1,16 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN" data-teacher="liuyin" style="--primary-dark: #3e2a21;
-    --primary-light: #6b4c3b;
-    --accent-gold: #b87c4f;
-    --accent-warm: #c59464;
-    --bg-paper: #fef8ef;
-    --bg-warm: #ece4d7;
-    --border-light: #eedbba;
-    --body-bg-start: #1a2a2e;
-    --body-bg-end: #24343a;
-    --header-symbol: "🌿";
-    --footer-icon: "🌿";
-    --math-symbols-display: none;">
+<html lang="zh-CN" data-teacher="liuyin" data-teacher-name="刘银老师" data-teacher-dept="语文组" data-teacher-icon="📖">
 
 <head>
     <meta charset="UTF-8">
@@ -19,12 +8,28 @@
     <link rel="stylesheet" href="style2.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>">
+    <style>
+        /* 刘银老师主题覆盖 */
+        :root {
+            --primary-dark: #3e2a21;
+            --primary-light: #6b4c3b;
+            --accent-gold: #b87c4f;
+            --accent-warm: #c59464;
+            --bg-paper: #fef8ef;
+            --bg-warm: #ece4d7;
+            --border-light: #eedbba;
+            --body-bg-start: #1a2a2e;
+            --body-bg-end: #24343a;
+            --header-symbol: "🌿";
+            --footer-icon: "🌿";
+        }
+    </style>
 </head>
 
 <body>
-    <div class="memorial-container fade-in" data-teacher="liuyin">
+    <div class="memorial-container fade-in">
         <div class="paper-bg">
             <div class="tomb-header slide-down">
                 <h1><span class="header-symbol">🌿</span> 刘银老师 <span class="header-symbol">🌿</span></h1>
@@ -32,12 +37,7 @@
             </div>
 
             <div class="memorial-statue scale-in">
-                <div class="portrait-wrapper" style="display: none;">
-                    <img class="teacher-portrait" 
-                         src="https://m.ccw.site/post/692538ef86bbc77f84e3b259/fe05885a-1352-45be-b02a-3ed59bcb4622.jpg"
-                         alt="刘银老师肖像">
-                </div>
-                <div class="math-symbols">
+                <div class="math-symbols" id="teacherSymbols">
                     <span>📖</span>
                     <span>🍃</span>
                     <span>✍️</span>
@@ -63,10 +63,10 @@
                 <div class="sender-section">
                     <div class="sender-row">
                         <label class="sender-label">🙏 追思者：</label>
-                        <input type="text" id="unifiedSenderName" class="sender-input" placeholder="您的姓名 / 届别">
+                        <input type="text" id="unifiedSenderName" class="sender-input" placeholder="您的姓名 / 届别" value="临川学子">
                     </div>
                     <div class="gift-item-row">
-                        <input type="text" id="giftItemName" class="gift-input" placeholder="礼物名称 (如：诗集、清茶)">
+                        <input type="text" id="giftItemName" class="gift-input" placeholder="礼物名称 (如：诗集、清茶)" value="心香一瓣">
                         <button class="send-gift-btn" id="sendGiftBtn">
                             <span>🎁</span> 敬赠心意
                         </button>
@@ -94,7 +94,7 @@
             <div class="message-section fade-in-up delay-2">
                 <div class="message-title">💬 寄思留言板</div>
                 <div class="input-group">
-                    <input type="text" id="guestName" class="guest-name-input" placeholder="您的姓名">
+                    <input type="text" id="guestName" class="guest-name-input" placeholder="您的姓名" value="临川学子">
                     <textarea id="guestMsg" class="guest-msg-input" rows="3" placeholder="写下想对刘银老师说的话..."></textarea>
                     <button class="send-msg" id="sendMsgBtn">
                         <span>✍️</span> 寄出思念
